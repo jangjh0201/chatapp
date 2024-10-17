@@ -1,4 +1,4 @@
 .env
 audio/
 
-!*.pyc
+__pycache__/
