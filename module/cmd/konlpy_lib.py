@@ -3,8 +3,13 @@ from konlpy.tag import Okt
 
 class Konlpy:
     def __init__(self):
-        pass
+        self.okt = Okt()
 
     def get_nouns(self, text):
-        okt = Okt()
-        return okt.nouns(text)
+        # return self.okt.nouns(text)
+
+        pos_result = self.okt.pos(text)
+        keywords = [
+            word for word, pos in pos_result if pos in ["Noun", "Adjective", "Verb"]
+        ]
+        return keywords

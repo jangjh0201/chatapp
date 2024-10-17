@@ -10,13 +10,13 @@ from module.stt.speech_recognition_lib import SpeechRecognition
 class STTBot:
     def __init__(self, google_api=False):
         if google_api:
-            self.stt_manager = GoogleSpeechToText()
+            self.stt_bot = GoogleSpeechToText()
         else:
-            self.stt_manager = SpeechRecognition()
+            self.stt_bot = SpeechRecognition()
 
     def listen(self, seconds=5):
         print(f"음성 입력을 시작합니다. {seconds}초간 마이크에 대고 말씀해주세요...")
-        result = self.stt_manager.record(seconds)
+        result = self.stt_bot.record(seconds)
         if result:
             print(f"인식된 문장: {result}")
             return result
