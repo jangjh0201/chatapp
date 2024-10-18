@@ -7,7 +7,7 @@ import scipy.io.wavfile as wavfile
 
 
 class GoogleSpeechToText:
-    def __init__(self):
+    def __init__(self, file_path="resource/audio/stt/temp_audio.wav"):
         # .env 파일 로드
         load_dotenv()
         # Google API 키 경로 설정
@@ -16,6 +16,7 @@ class GoogleSpeechToText:
         )
         # Google Cloud Speech-to-Text 클라이언트 설정
         self.client = speech.SpeechClient()
+        self.file_path = file_path
 
     def record(self, seconds):
         print(f"Recording {seconds} seconds of audio...")
@@ -26,11 +27,11 @@ class GoogleSpeechToText:
         sd.wait()  # 녹음이 끝날 때까지 대기
 
         # 녹음된 데이터를 wav 파일로 저장
-        wavfile.write("resource/audio/temp_audio.wav", 44100, recording)
+        wavfile.write(self.file_path, 44100, recording)
 
         try:
             # Google Cloud Speech-to-Text API 호출을 위해 오디오 파일 읽기
-            with open("resource/audio/temp_audio.wav", "rb") as audio_file:
+            with open(self.file_path, "rb") as audio_file:
                 content = audio_file.read()
                 audio = speech.RecognitionAudio(content=content)
 
