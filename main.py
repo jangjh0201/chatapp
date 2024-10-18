@@ -1,9 +1,10 @@
-from bot import cmd_bot, stt_bot
+from app.chatapp import ChatApp
 
 if __name__ == "__main__":
-    stt_bot = stt_bot.STTBot()
-    sentence = stt_bot.listen()
+    # ChatApp 인스턴스 생성 및 실행
+    app = ChatApp()
 
-    cmd_bot = cmd_bot.CMDBot()
-    command = cmd_bot.get_command(sentence)
-    print(command)
+    # 앱을 계속 실행 (while 루프로 지속)
+    while True:
+        app.run()
+        print("앱을 계속 실행 중입니다. 종료하려면 Ctrl + C를 누르세요.")
