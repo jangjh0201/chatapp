@@ -18,13 +18,13 @@ class ChatApp:
         elif "출근" in command_list:
             response = "출근 준비를 도와드릴게요."
         else:
-            response = "죄송해요, 이해하지 못했어요."
+            response = "이해하지 못했어요. 다시 말씀해 주세요."
 
         return response
 
     def run(self):
         # 음성 입력받기 (STT)
-        sentence = self.stt_bot.listen_unlimited()
+        sentence = self.stt_bot.listen()
         print(f"음성 입력: {sentence}")
 
         # 명령어 추출 (CMD)
