@@ -14,10 +14,13 @@ class TTSBot:
         if not os.path.exists(path):
             os.makedirs(path)
 
-    def speak(self, text: str):
-        # 동적으로 파일명을 생성하여 저장
+    def create_file_path(self):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_file = os.path.join(self.output_dir, f"gtts_output_{timestamp}.mp3")
-        self.tts_module.save_to_file(output_file, text)
-        playsound(output_file)
+        module_name = self.tts_module.__class__.__name__
+        return os.path.join(self.output_dir, f"{module_name}_{timestamp}.mp3")
+
+    def speak(self, text: str):
+        file_path = self.create_file_path()
+        self.tts_module.save_to_file(file_path, text)
+        playsound(file_path)
         return text

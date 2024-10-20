@@ -1,3 +1,5 @@
+from datetime import datetime
+import os
 from module.stt.google_stt_api import GoogleSpeechToText
 from module.stt.speech_recognition_lib import SpeechRecognition
 
@@ -5,13 +7,25 @@ from module.stt.speech_recognition_lib import SpeechRecognition
 class STTBot:
     def __init__(self, google_api=False):
         if google_api:
-            self.stt_module = GoogleSpeechToText("resource/audio/stt/temp_audio.wav")
+            self.stt_module = GoogleSpeechToText()
         else:
-            self.stt_module = SpeechRecognition("resource/audio/stt/temp_audio.wav")
+            self.stt_module = SpeechRecognition()
+        self.output_dir = "resource/audio/stt/"
+        self.ensure_directory_exists(self.output_dir)
+
+    def ensure_directory_exists(self, path: str):
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+    def create_file_path(self):
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        module_name = self.stt_module.__class__.__name__
+        return os.path.join(self.output_dir, f"{module_name}_{timestamp}.wav")
 
     def listen(self, seconds=5):
         print(f"음성 입력을 시작합니다. {seconds}초간 마이크에 대고 말씀해주세요...")
-        result = self.stt_module.record(seconds)
+        file_path = self.create_file_path()
+        result = self.stt_module.record(file_path, seconds)
         if result:
             return result
         else:
@@ -19,7 +33,8 @@ class STTBot:
 
     def listen_unlimited(self):
         print("무제한 음성 입력을 시작합니다. 4초간 입력이 없으면 종료됩니다.")
-        result = self.stt_module.record_unlimited()
+        file_path = self.create_file_path()
+        result = self.stt_module.record_unlimited(file_path)
         if result:
             return result
         else:

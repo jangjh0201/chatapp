@@ -6,12 +6,11 @@ import scipy.io.wavfile as wavfile
 
 
 class SpeechRecognition:
-    def __init__(self, file_path="resource/audio/stt/temp_audio.wav"):
+    def __init__(self):
         self.recognizer = sr.Recognizer()
         self.sample_rate = 44100  # 샘플링 레이트 설정
-        self.file_path = file_path
 
-    def record(self, seconds):
+    def record(self, file_path, seconds):
         # 5초 동안 오디오 녹음 (마이크 테스트를 위해 sounddevice 사용)
         recording = sd.rec(
             int(seconds * self.sample_rate),
@@ -22,10 +21,10 @@ class SpeechRecognition:
         sd.wait()  # 녹음이 끝날 때까지 대기
 
         # 녹음된 데이터를 wav 파일로 저장 후, recognizer로 변환
-        wavfile.write(self.file_path, 44100, recording)
+        wavfile.write(file_path, 44100, recording)
         try:
             # 저장된 오디오 파일을 읽어서 음성 인식 수행
-            with sr.AudioFile(self.file_path) as source:
+            with sr.AudioFile(file_path) as source:
                 audio_data = self.recognizer.record(source)
                 text = self.recognizer.recognize_google(audio_data, language="ko-KR")
                 return text
@@ -37,7 +36,7 @@ class SpeechRecognition:
             print(f"봇: 음성 인식 서비스에 접근할 수 없습니다: {e}")
             return False
 
-    def record_unlimited(self):
+    def record_unlimited(self, file_path):
         chunk_duration = 1  # 1초씩 녹음
         silence_duration = 4  # 4초간 무음일 경우 종료
 
@@ -71,14 +70,14 @@ class SpeechRecognition:
 
         # 녹음된 데이터를 wav 파일로 저장 후, recognizer로 변환
         wavfile.write(
-            self.file_path,
+            file_path,
             self.sample_rate,
             np.array(recorded_audio, dtype=np.int16),
         )
 
         try:
             # 저장된 오디오 파일을 읽어서 음성 인식 수행
-            with sr.AudioFile(self.file_path) as source:
+            with sr.AudioFile(file_path) as source:
                 audio_data = self.recognizer.record(source)
                 text = self.recognizer.recognize_google(audio_data, language="ko-KR")
                 return text
