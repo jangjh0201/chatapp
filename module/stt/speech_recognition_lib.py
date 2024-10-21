@@ -10,6 +10,9 @@ class SpeechRecognition:
         self.recognizer = sr.Recognizer()
         self.sample_rate = 44100  # 샘플링 레이트 설정
 
+    def __str__(self):
+        return self.__class__.__name__
+
     def record(self, file_path, seconds):
         # 5초 동안 오디오 녹음 (마이크 테스트를 위해 sounddevice 사용)
         recording = sd.rec(

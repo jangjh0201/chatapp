@@ -1,12 +1,16 @@
 import os
 from datetime import datetime
 from playsound import playsound
-from module.tts.gtts_lib import gtts
+from module.tts.google_tts_api import GoogleCloudTTS
+from module.tts.gtts_lib import Gtts
 
 
 class TTSBot:
-    def __init__(self):
-        self.tts_module = gtts()
+    def __init__(self, google_api=False):
+        if google_api:
+            self.tts_module = GoogleCloudTTS()
+        else:
+            self.tts_module = Gtts()
         self.output_dir = "resource/audio/tts/"
         self.ensure_directory_exists(self.output_dir)
 
@@ -16,8 +20,7 @@ class TTSBot:
 
     def create_file_path(self):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        module_name = self.tts_module.__class__.__name__
-        return os.path.join(self.output_dir, f"{module_name}_{timestamp}.mp3")
+        return os.path.join(self.output_dir, f"{self.tts_module}_{timestamp}.mp3")
 
     def speak(self, text: str):
         file_path = self.create_file_path()
