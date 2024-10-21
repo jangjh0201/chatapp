@@ -18,8 +18,8 @@ class Parser:
         Returns:
             tuple: (구어체 문장, 명령어 리스트)
         """
-        # 정규 표현식을 사용하여 문장 끝에 있는 [] 부분을 추출
-        match = re.search(r"\[(.*?)\]$", sentence)
+        # 정규 표현식을 사용하여 문장 내 어디든 있는 [] 부분을 추출
+        match = re.search(r"\[(.*?)\]", sentence)
 
         if match:
             # 구어체 문장은 대괄호 이전 부분을 가져옴
