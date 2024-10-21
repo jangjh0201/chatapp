@@ -26,6 +26,9 @@ class Parser:
             spoken_part = sentence[: match.start()].strip()
             # 명령어 리스트는 대괄호 안의 내용을 쉼표 기준으로 분리
             command_list = match.group(1).split(",")
+            # 대괄호 안이 비어 있으면 빈 리스트 반환
+            if command_list == [""]:
+                command_list = []
             # 명령어 리스트의 각 항목에서 불필요한 공백 제거
             command_list = [cmd.strip() for cmd in command_list]
             return spoken_part, command_list
