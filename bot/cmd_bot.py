@@ -15,4 +15,6 @@ class CMDBot:
         spoken_part, command_list = self.cmd_parser.parse_sentence_with_commands(
             sentence
         )
+        if "False" in spoken_part:
+            return "다시 말씀해주세요", command_list
         return spoken_part, command_list

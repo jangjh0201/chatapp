@@ -39,9 +39,10 @@ class ChatApp:
         response = self.ai_bot.generate_response(sentence)
 
         # 응답 파싱
-        parsed_response, parsed_command = cmd_bot.CMDBot().parse_sentence(response)
+        parsed_response, parsed_commands = cmd_bot.CMDBot().parse_sentence(response)
 
         # 응답 메시지를 음성으로 출력 (TTS)
         self.tts_bot.speak(parsed_response)
         print(f"봇: {parsed_response}")
-        print(f"{parsed_command}\n")
+        if parsed_commands:
+            print(f"{parsed_commands}")
