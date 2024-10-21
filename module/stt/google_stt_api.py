@@ -1,21 +1,27 @@
-from google.cloud import speech_v1p1beta1 as speech
 import os
 from dotenv import load_dotenv
 import sounddevice as sd
 import numpy as np
 import scipy.io.wavfile as wavfile
+from google.oauth2 import service_account
+
+from google.cloud import speech_v1p1beta1 as speech
 
 
-class GoogleSpeechToText:
+class GoogleCloudSTT:
     def __init__(self):
         # .env 파일 로드
         load_dotenv()
-        # Google API 키 경로 설정
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv(
-            "GOOGLE_APPLICATION_CREDENTIALS"
+        credentials_path = os.getenv("GOOGLE_SPEAK_CREDENTIALS")
+        credentials = service_account.Credentials.from_service_account_file(
+            credentials_path
         )
-        # Google Cloud Speech-to-Text 클라이언트 설정
-        self.client = speech.SpeechClient()
+
+        # Speech-to-Text 클라이언트 초기화
+        self.client = speech.SpeechClient(credentials=credentials)
+
+    def __str__(self):
+        return self.__class__.__name__
 
     def record(self, file_path, seconds):
         print(f"Recording {seconds} seconds of audio...")
