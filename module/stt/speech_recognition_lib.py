@@ -33,10 +33,10 @@ class SpeechRecognition:
                 return text
 
         except sr.UnknownValueError as e:
-            print(f"봇: 음성을 이해하지 못했습니다. {e}")
+            print(f"음성 인식 오류 {e}")
             return False
         except sr.RequestError as e:
-            print(f"봇: 음성 인식 서비스에 접근할 수 없습니다: {e}")
+            print(f"음성 인식 서비스 접근 불가: {e}")
             return False
 
     def record_unlimited(self, file_path):
