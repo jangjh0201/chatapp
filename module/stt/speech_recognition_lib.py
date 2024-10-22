@@ -31,13 +31,10 @@ class SpeechRecognition:
                 audio_data = self.recognizer.record(source)
                 text = self.recognizer.recognize_google(audio_data, language="ko-KR")
                 return text
-
-        except sr.UnknownValueError as e:
-            print(f"음성 인식 오류 {e}")
-            return False
-        except sr.RequestError as e:
-            print(f"음성 인식 서비스 접근 불가: {e}")
-            return False
+        except sr.UnknownValueError:
+            return "다시 말씀해주세요"
+        except sr.RequestError:
+            return "오류가 발생했습니다"
 
     def record_unlimited(self, file_path):
         chunk_duration = 1  # 1초씩 녹음
@@ -85,12 +82,10 @@ class SpeechRecognition:
                 text = self.recognizer.recognize_google(audio_data, language="ko-KR")
                 return text
 
-        except sr.UnknownValueError as e:
-            print(f"봇: 음성을 이해하지 못했습니다. {e}")
-            return False
-        except sr.RequestError as e:
-            print(f"봇: 음성 인식 서비스에 접근할 수 없습니다: {e}")
-            return False
+        except sr.UnknownValueError:
+            return "다시 말씀해주세요"
+        except sr.RequestError:
+            return "오류가 발생했습니다"
 
     def record_and_recognize_realtime(self):
         try:
@@ -116,7 +111,7 @@ class SpeechRecognition:
                         )
                     except sr.RequestError as e:
                         print(
-                            f"Google Web Speech API 서비스에 문제가 발생했습니다; {e}"
+                            f"Google Web Speech API 서비스에 문제가 발생했습니다. {e}"
                         )
                         break
 
