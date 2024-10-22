@@ -85,7 +85,7 @@ class GeminiApp:
             print(f"음성 입력: {sentence}")
 
             # AI 모델을 사용하여 응답 생성
-            response = self.get_response(sentence)
+            response = self.chat_session.send_message(sentence)
             response_data = json.loads(response)  # JSON 형식의 응답을 받음
             answer = response_data.get("answer", "")
             commands = response_data.get("commands", [])
@@ -101,38 +101,5 @@ class GeminiApp:
 
         print("청취 모드로 돌아갑니다.")
 
-    def get_response(self, user_query: str) -> str:
-        """
-        사용자 입력을 받아 대화 세션을 진행하고 응답을 반환합니다.
-
-        Args:
-            user_query (str): 사용자 입력 문장
-
-        Returns:
-            str: AI 모델의 응답 문장
-        """
-        response = self.chat_session.send_message(user_query)
-        return response.text
-
-    def start_chat(self):
-        """
-        실시간으로 사용자 입력을 받아 대화 세션을 진행합니다.
-        """
-        print("대화 세션을 시작합니다. 종료하려면 'exit'를 입력하세요.")
-
-        while True:
-            user_query = input("[사용자]: ")
-
-            if user_query.lower() == "exit":
-                print("대화 세션을 종료합니다.")
-                break
-
-            print(f"[모델]: {self.get_response(user_query)}")
-
     def __str__(self):
         return self.__class__.__name__
-
-
-if __name__ == "__main__":
-    gemini_bot = GeminiApp()
-    gemini_bot.run()
