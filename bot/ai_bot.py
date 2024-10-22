@@ -14,7 +14,7 @@ class AIBot:
             self.create_file_path()
         )  # 초기화 시 새 시나리오 파일 경로 생성
         self.role_prompt_path = (
-            "resource/script/role.txt"  # 역할이 적힌 텍스트 파일 경로
+            "resource/script/prompt/vertex_role.txt"  # 역할이 적힌 텍스트 파일 경로
         )
         self.ai_module = GoogleCloudVertexAI(
             project_id="hifive-438811",
