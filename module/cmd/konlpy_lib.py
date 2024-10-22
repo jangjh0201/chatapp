@@ -9,7 +9,6 @@ class Konlpy:
         return self.__class__.__name__
 
     def get_nouns(self, text):
-        # return self.okt.nouns(text)
 
         pos_result = self.okt.pos(text)
         keywords = [
