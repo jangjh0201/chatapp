@@ -60,7 +60,7 @@ class GeminiApp:
         실시간 음성 명령어 청취 및 트리거 단어 인식 후 대화 수행.
         """
         print(
-            f"기본 청취 모드를 시작합니다. '{self.trigger_word}'라고 말하면 대화가 시작됩니다."
+            f"청취 모드를 시작합니다. '{self.trigger_word}'라고 말하면 대화가 시작됩니다."
         )
 
         while True:
@@ -99,7 +99,7 @@ class GeminiApp:
                 print(f"명령어: {commands}")
                 break  # commands가 있으면 대화 종료
 
-        print("기본 청취 모드로 돌아갑니다.")
+        print("청취 모드로 돌아갑니다.")
 
     def get_response(self, user_query: str) -> str:
         """
