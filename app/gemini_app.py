@@ -86,7 +86,7 @@ class GeminiApp:
 
             # AI 모델을 사용하여 응답 생성
             response = self.chat_session.send_message(sentence)
-            response_data = json.loads(response)  # JSON 형식의 응답을 받음
+            response_data = json.loads(response.text)  # JSON 형식의 응답을 받음
             answer = response_data.get("answer", "")
             commands = response_data.get("commands", [])
 
