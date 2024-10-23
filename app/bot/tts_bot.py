@@ -12,7 +12,7 @@ class TTSBot:
             self.tts_module = GoogleCloudTTS()
         else:
             self.tts_module = Gtts()
-        self.output_dir = "aap/resource/audio/tts/"
+        self.output_dir = "app/resource/audio/tts/"
         self.ensure_directory_exists(self.output_dir)
 
     def ensure_directory_exists(self, path: str):
