@@ -1,6 +1,6 @@
 from datetime import datetime
 import os
-from module.ai.google_vertex_api import GoogleCloudVertexAI
+from app.module.ai.google_vertex_api import GoogleCloudVertexAI
 
 
 class AIBot:
@@ -9,12 +9,12 @@ class AIBot:
         AIBot 클래스 초기화. GoogleCloudVertexAI 모듈을 사용하여 Vertex AI와 상호작용합니다.
         생성된 텍스트 파일이 저장될 경로와 역할 프롬프트 파일 경로를 설정합니다.
         """
-        self.output_dir = "resource/script/ai/"
+        self.output_dir = "app/resource/script/ai/"
         self.scenario_path = (
             self.create_file_path()
         )  # 초기화 시 새 시나리오 파일 경로 생성
         self.role_prompt_path = (
-            "resource/script/prompt/vertex_role.txt"  # 역할이 적힌 텍스트 파일 경로
+            "app/resource/script/prompt/vertex_role.txt"  # 역할이 적힌 텍스트 파일 경로
         )
         self.ai_module = GoogleCloudVertexAI(
             project_id="hifive-438811",

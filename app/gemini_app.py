@@ -2,7 +2,7 @@ import json
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
-from bot import stt_bot, tts_bot
+from app.bot import stt_bot, tts_bot
 from backend.task_manager import TaskManager  # TaskManager 임포트
 
 
@@ -31,7 +31,7 @@ class GeminiApp:
 
         # Google Gemini API 모델 설정
         self.system_instruction = self.load_role_prompt(
-            "resource/script/prompt/gemini_role.txt"
+            "app/resource/script/prompt/gemini_role.txt"
         )
         self.model = genai.GenerativeModel(
             model_name=model_name,

@@ -1,6 +1,6 @@
-from module.cmd.konlpy_lib import Konlpy
-from module.cmd.parser import Parser
-from module.cmd.converter import Converter
+from app.module.cmd.konlpy_lib import Konlpy
+from app.module.cmd.parser import Parser
+from app.module.cmd.converter import Converter
 
 
 class CMDBot:

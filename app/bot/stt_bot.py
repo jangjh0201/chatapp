@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
-from module.stt.google_stt_api import GoogleCloudSTT
-from module.stt.speech_recognition_lib import SpeechRecognition
+from app.module.stt.google_stt_api import GoogleCloudSTT
+from app.module.stt.speech_recognition_lib import SpeechRecognition
 
 
 class STTBot:
@@ -22,7 +22,7 @@ class STTBot:
             self.stt_module = GoogleCloudSTT()
         else:
             self.stt_module = SpeechRecognition()
-        self.output_dir = "resource/audio/stt/"
+        self.output_dir = "app/resource/audio/stt/"
         self.ensure_directory_exists(self.output_dir)
 
     def ensure_directory_exists(self, path: str):

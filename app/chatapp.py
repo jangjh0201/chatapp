@@ -1,4 +1,4 @@
-from bot import ai_bot, cmd_bot, stt_bot, tts_bot
+from app.bot import ai_bot, cmd_bot, stt_bot, tts_bot
 
 
 class ChatApp:

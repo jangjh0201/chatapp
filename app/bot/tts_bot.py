@@ -1,8 +1,9 @@
 import os
 from datetime import datetime
 from playsound import playsound
-from module.tts.google_tts_api import GoogleCloudTTS
-from module.tts.gtts_lib import Gtts
+
+from app.module.tts.google_tts_api import GoogleCloudTTS
+from app.module.tts.gtts_lib import Gtts
 
 
 class TTSBot:
@@ -11,7 +12,7 @@ class TTSBot:
             self.tts_module = GoogleCloudTTS()
         else:
             self.tts_module = Gtts()
-        self.output_dir = "resource/audio/tts/"
+        self.output_dir = "aap/resource/audio/tts/"
         self.ensure_directory_exists(self.output_dir)
 
     def ensure_directory_exists(self, path: str):

@@ -1,5 +1,5 @@
 import pytest
-from module.cmd.parser import Parser  # Parser 클래스를 작성한 모듈에서 가져옵니다.
+from app.module.cmd.parser import Parser  # Parser 클래스를 작성한 모듈에서 가져옵니다.
 
 
 @pytest.fixture
