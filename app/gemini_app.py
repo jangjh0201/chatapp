@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 from bot import stt_bot, tts_bot
+from backend.task_manager import TaskManager  # TaskManager 임포트
 
 
 class GeminiApp:
@@ -38,6 +39,9 @@ class GeminiApp:
             generation_config={"response_mime_type": "application/json"},
         )
         self.chat_session = self.model.start_chat(history=[])
+
+        # TaskManager 초기화
+        self.task_manager = TaskManager()
 
     def load_role_prompt(self, file_path: str) -> str:
         """
@@ -94,12 +98,58 @@ class GeminiApp:
             self.tts_bot.speak(answer)
             print(f"봇: {answer}")
 
-            # commands는 출력만 함
+            # 명령어 처리
             if commands:
-                print(f"명령어: {commands}")
-                break  # commands가 있으면 대화 종료
+                self.handle_commands(commands)
+                break  # 명령어가 있으면 대화 종료
 
         print("청취 모드로 돌아갑니다.")
+
+    # def handle_commands(self, commands):
+    #     """
+    #     단일 명령어 리스트를 처리하고 해당 작업을 수행합니다.
+    #     """
+    #     # commands 리스트에서 명사(action)와 동사(task)를 분리
+    #     action, task = commands[0], commands[1]
+    #     print(f"Action: {action}, Task: {task}")
+
+    #     if action in ["커피", "차", "아이스티"] and task == "만들기":
+    #         result = self.task_manager.start_making_drink()
+    #         self.tts_bot.speak(result)
+
+    #     elif action == "물건들" and task in ["꺼내기", "정리하기"]:
+    #         result = self.task_manager.start_removing_drawer()
+    #         self.tts_bot.speak(result)
+
+    #     elif action == "대화" and task == "끝내기":
+    #         self.tts_bot.speak("대화를 종료합니다.")
+
+    def handle_commands(self, commands):
+        """
+        단일 명령어 리스트를 처리하고 해당 작업을 수행합니다.
+        """
+        # commands 리스트에서 명사(action)와 동사(task)를 분리
+        action, task = commands[0], commands[1]
+        print(f"Action: {action}, Task: {task}")
+
+        if self.task_manager.can_use_robot():
+            if action in ["커피", "차", "아이스티"] and task == "만들기":
+                # 음료 만들기 작업을 비동기로 처리
+                self.task_manager.start_making_drink()
+
+            elif action == "물건들" and task in ["꺼내기", "정리하기"]:
+                # 서랍 빼기 또는 정리가 가능하면 작업을 시작
+                if task == "꺼내기":
+                    self.task_manager.start_emptying_drawer()
+                else:
+                    self.task_manager.start_storing_drawer()
+
+            elif action == "대화" and task == "끝내기":
+                self.tts_bot.speak("대화를 종료합니다.")
+
+        else:
+            self.tts_bot.speak("이미 작업 중입니다.")
+            print("이미 작업 중입니다.")
 
     def __str__(self):
         return self.__class__.__name__
