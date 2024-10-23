@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 from app.bot import stt_bot, tts_bot
+from app.utils.cleaner import cleanup_folders
 from backend.task_manager import TaskManager  # TaskManager 임포트
 
 
@@ -39,6 +40,9 @@ class GeminiApp:
             generation_config={"response_mime_type": "application/json"},
         )
         self.chat_session = self.model.start_chat(history=[])
+
+        # 특정 폴더의 파일 삭제
+        cleanup_folders(["app/resource/audio/stt", "app/resource/audio/tts"])
 
         # TaskManager 초기화
         self.task_manager = TaskManager()
@@ -100,29 +104,10 @@ class GeminiApp:
 
             # 명령어 처리
             if commands:
-                self.handle_commands(commands)
+                print(f"{commands}")
                 break  # 명령어가 있으면 대화 종료
 
-        print("청취 모드로 돌아갑니다.")
-
-    # def handle_commands(self, commands):
-    #     """
-    #     단일 명령어 리스트를 처리하고 해당 작업을 수행합니다.
-    #     """
-    #     # commands 리스트에서 명사(action)와 동사(task)를 분리
-    #     action, task = commands[0], commands[1]
-    #     print(f"Action: {action}, Task: {task}")
-
-    #     if action in ["커피", "차", "아이스티"] and task == "만들기":
-    #         result = self.task_manager.start_making_drink()
-    #         self.tts_bot.speak(result)
-
-    #     elif action == "물건들" and task in ["꺼내기", "정리하기"]:
-    #         result = self.task_manager.start_removing_drawer()
-    #         self.tts_bot.speak(result)
-
-    #     elif action == "대화" and task == "끝내기":
-    #         self.tts_bot.speak("대화를 종료합니다.")
+        print("청취 모드로 돌아갑니다.\n")
 
     def handle_commands(self, commands):
         """
