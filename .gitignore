@@ -2,5 +2,4 @@
 __pycache__
 resource/audio/stt/*
 resource/audio/tts/*
-resource/script/prompt/*
 resource/script/scenario/*
